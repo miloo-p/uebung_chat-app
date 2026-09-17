@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views import View
+import json
 from django.http import JsonResponse
 from .models import Chat
-import json
-from django.views import View
 # Create your views here.
 
 
@@ -24,7 +25,7 @@ from django.views import View
 #         Chat.objects.create(name=data["name"], message=data["message"])
 #         return JsonResponse(data)
 
-
+@method_decorator(csrf_exempt, name='dispatch')
 class ChatView(View):
     def get(self, request):
         chats = Chat.objects.all()
